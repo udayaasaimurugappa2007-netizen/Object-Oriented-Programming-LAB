@@ -1,0 +1,20 @@
+# Compiled Java class files and build directories
+*.class
+bin/
+target/
+build/
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# Virtual machine crash logs
+hs_err_pid*
+
+# IDE and OS metadata
+.DS_Store
+.idea/
+*.iml
+.vscode/
+

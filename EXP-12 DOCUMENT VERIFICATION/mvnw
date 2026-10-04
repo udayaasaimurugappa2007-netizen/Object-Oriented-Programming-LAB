@@ -1,0 +1,91 @@
+#!/bin/sh
+# ----------------------------------------------------------------------------
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#    https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+# ----------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------
+# Maven Start Up Batch script
+#
+# Required ENV Vars:
+# ------------------
+#   JAVA_HOME - location of a JDK home dir
+# ----------------------------------------------------------------------------
+
+die() {
+    echo "$*" >&2
+    exit 1
+}
+
+# OS specific support.
+cygwin=false;
+darwin=false;
+case "`uname`" in
+  CYGWIN*) cygwin=true ;;
+  Darwin*) darwin=true ;;
+esac
+
+if [ -z "$JAVA_HOME" ] ; then
+  if [ -r /etc/gentoo-release ] ; then
+    JAVA_HOME=`java-config --jre-home`
+  fi
+fi
+
+if [ -z "$JAVA_HOME" ] ; then
+  JAVACMD=`which java 2> /dev/null`
+  if [ -z "$JAVACMD" ] ; then
+    die "Cannot find java executable in PATH and JAVA_HOME is not set."
+  fi
+else
+  JAVACMD="$JAVA_HOME/bin/java"
+fi
+
+if [ ! -x "$JAVACMD" ] ; then
+  die "The java executable ($JAVACMD) is not executable."
+fi
+
+# Locate the project base directory
+MAVEN_PROJECTBASEDIR="$MAVEN_BASEDIR"
+if [ -z "$MAVEN_PROJECTBASEDIR" ]; then
+  PRG="$0"
+  while [ -h "$PRG" ] ; do
+    ls=`ls -ld "$PRG"`
+    link=`expr "$ls" : '.*-> \(.*\)$'`
+    if expr "$link" : '/.*' > /dev/null; then
+      PRG="$link"
+    else
+      PRG=`dirname "$PRG"`/"$link"
+    fi
+  done
+  saveddir=`pwd`
+  MAVEN_PROJECTBASEDIR=`dirname "$PRG"`
+  MAVEN_PROJECTBASEDIR=`cd "$MAVEN_PROJECTBASEDIR" && pwd`
+  cd "$saveddir"
+fi
+
+WRAPPER_JAR="$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.jar"
+
+if [ ! -f "$WRAPPER_JAR" ]; then
+    echo "Could not find $WRAPPER_JAR. Please ensure .mvn/wrapper/maven-wrapper.jar exists." >&2
+    exit 1
+fi
+
+exec "$JAVACMD" \
+  $MAVEN_OPTS \
+  "-Dmaven.multiModuleProjectDirectory=$MAVEN_PROJECTBASEDIR" \
+  -classpath "$WRAPPER_JAR" \
+  org.apache.maven.wrapper.MavenWrapperMain "$@"
